@@ -1,0 +1,249 @@
+>show dbs;
+
+>use curso_mongodb;
+
+>db.dropDatabase();
+
+>db.createCollection("alunos");
+
+>db.getCollectionNames();
+
+>db.createCollection("cursos");
+
+>db.cursos.drop();
+
+>db.getCollectionNames():
+
+------INSERT-------------
+
+>db.alunos.save(
+{
+	nome: 'José',
+	idade: 30,
+	sexo: 'M',
+	cpf: '123.123.123-12',
+	rg: '123.123.123-1',
+	matricula: 'abcd123'
+}
+)
+
+
+>db.alunos.save(
+{
+	nome: 'Maria',
+	idade: 25,
+	sexo: 'F',
+	matricula: 'uio123'
+}
+)
+
+>db.alunos.save(
+{
+	nome: 'Fernanda',
+	idade: 32,
+	sexo: 'F',
+	matricula: 'fkfd456',
+        curso_interesse: [               
+           {
+               curso: 'Curso Completo do Desenvolvedor NodeJS'         
+           },
+
+           {
+               curso: 'Curso Completo de Desenvolvimento Web - crie 6 projetos'         
+           }
+        ]
+}
+)
+
+>db.alunos.findOne().pretty();
+
+>db.alunos.find().pretty();
+
+>db.alunos.find(
+{
+   nome: {$eq:'José'}
+}
+).pretty();
+
+
+>db.alunos.find(
+{
+   idade: {$lt:30}
+}
+).pretty();
+
+
+>db.alunos.find(
+{
+   idade: {$lte:30}
+}
+).pretty();
+
+
+>db.alunos.find(
+{
+   idade: {$gt:30}
+}
+).pretty();
+
+
+>db.alunos.find(
+{
+   idade: {$gte:30}
+}
+).pretty();
+
+
+>db.alunos.find(
+{
+   sexo: {$ne:'M'}
+}
+).pretty();
+
+
+
+db.alunos.find(
+{
+   sexo:{$eq:'F'},
+  idade:{$gt:30}
+}
+)
+
+
+db.alunos.find(
+{
+   $or[
+        { nome:{$eq:"Maria"}},
+        { nome:{$eq:"José"}}
+   [
+}
+).pretty();
+
+----UPDATE------
+
+update(
+{parametros para atualização},
+{$set},
+{multi:false}) false = só atualiza o primeiro campo que encontrar
+true = atualiza todos os campos que existir
+
+>db.alunos.update(
+{nome: 'José'},
+{
+   $set:
+        {nome: 'Joao'}
+},
+{multi:false}
+)
+
+>db.alunos.update(
+{nome: 'Maria'},
+{
+   $set:
+        {sexo: 'F', idade:26}
+},
+{multi:false}
+)
+
+>db.alunos.update(
+{sexo: 'F'},
+{
+   $set:
+        {sexo: 'Feminino'}
+},
+{multi:true}
+)
+
+------REMOVE--------
+
+remove({criterio de exclusão},0/false ou 1/true)
+
+0 ou false ou omitido - todos que encontrar no criterio são excluidos
+1 ou true - apenas o primeiro que encontrar
+
+
+>db.alunos.remove(  
+{nome:'Maria'}
+)
+
+>db.alunos.remove(  
+{
+   idade: {$gt: 30}
+}
+)
+
+
+
+----------------------------EXERCICIOS---------------------
+
+>use biblioteca
+
+>db.createCollection("livros")
+
+>db.livros.save(
+{
+	titulo: 'Introdução a linguagem de marcação HTML',
+	valor: 25.00,
+	autor: 'João'
+}
+)
+
+
+db.livros.find(
+{
+
+   valor:{$gt:200.00}
+
+}).pretty()
+
+db.livros.find(
+{
+   valor:{$gte:10.00},
+   valor:{$lte:30.00}
+}
+).pretty()
+
+db.livros.find(
+{
+   autor:{$ne:"Fernando"}
+}
+).pretty()
+
+
+>db.livros.update(
+{titulo: 'PHP e MySQL'},
+{
+   $set:
+        {valor: 175.00}
+},
+{multi:false}
+)
+
+>db.livros.update(
+{valor:{$lte:25.00}},
+{
+   $set:
+        {valor: 27.00}
+},
+{multi:true}
+)
+
+
+>db.alunos.update(
+{nome: 'João'},
+{
+   $set:
+        {nome: 'Joao1'}
+},
+{multi:false}
+)
+
+>db.livros.remove(  
+{valor:{$lt:30,00}},0
+)
+
+
+
+
+
+

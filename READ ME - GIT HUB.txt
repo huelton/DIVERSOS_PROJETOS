@@ -1,0 +1,30 @@
+Acessar a pasta do PROJETO
+cd C:/Users/huelt/SPRING-TOOL/financeiro
+
+
+> git init -- INICIAR O PROJETO COM O GIT
+
+> git add '*.txt' -> ADICIONA TODOS OS ARQUIVOS COM A EXTENSÃO .txt
+
+OU
+
+> git add -A  -> ADICIONA TODOS OS ARQUIVOS PARA O REPOSITORIO
+
+> git status -> para verificar os arquivos 
+
+> git commit -m "adicionado os arquivos ao GIT" -> ATUALIZA OS ARQUIVOS PARA ENVIAR AO GIT, com o comentario
+
+OU
+
+> git commit -a -m "adicionado e atualiza os arquivos ao GIT" 
+
+> git remote add origin 
+https://github.com/huelton/sistema-de-cobranca.git
+
+
+> git remote add origin https://github.com/huelton/brewer.git  -> Disponibiliza o diretorio do git para a sincronização
+
+> git push -u origin master  -> encaminha os arquivos para o diretorio Web
+
+
+

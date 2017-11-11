@@ -1,0 +1,9 @@
+SCHEMAS=HR
+DIRECTORY=DP_DIR
+DUMPFILE=hr_tabelas_dados_filtro_linhas.dmp
+CONTENT=DATA_ONLY
+EXCLUDE=TABLE:"IN ('COUNTRIES', 'REGIONS')"
+QUERY=employees:"WHERE department_id !=50 ORDER BY employee_id"
+LOGFILE=hr_tabelas_dados_filtro_linhas.log
+ESTIMATE=STATISTICS
+REUSE_DUMPFILES=YES

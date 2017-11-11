@@ -1,0 +1,467 @@
+AULA 01
+
+# nome do arquivo: meuscript.sh
+
+#!/bin/bash
+
+#Meu comentario
+echo "Olá, mundo!"
+
+salva
+
+abrir o arqivo /.meuscript.sh
+
+chmod +x meuscript.sh #permissao de execução para o script
+#Comentario em bloco
+:<<'terminal'
+echo "teste1"
+echo "teste2"
+echo "teste3"
+echo "teste4"
+echo "teste5"
+terminal
+
+source nome_do_script #chama outros scripts
+
+__________________________________________________________
+
+AULA02
+
+#!/bin/bash
+
+#Meu comentario
+OLA="Olá, mundo!"
+echo $OLA
+
+
+o que podem em variaveis no shell
+
+OLA="valor"   - CORRETO
+OLA = "valor" - ERRADO
+
+printenv ou env - lista todas as variaveis de ambiente do Linux
+TESTE="nada"
+echo $TESTE
+nada
+unset TESTE - apaga o valor na sessao do usuario
+
+OLA="Ola, mundo!"
+echo $OLA
+Ola, mundo!
+
+export OLA 
+set | grep OLA #exporta para as variaveis de ambiente da sessao
+
+env | grep OLA
+printenv | grep OLA
+
+
+OLA=$(echo Ola, mundo! | grep teste)
+echo $OLA
+
+
+tentar rodar o comando abaixo:
+echo t{r,igr,rist}es
+
+
+
+
+ARRAYS
+
+é um conjunto de dados
+
+#!/bin/bash
+
+#Meu comentario
+mundo=("shell script","bash","gnu","linux","debian")
+
+echo ${mundo[1]}
+
+mundo[0]="Nada"
+mundo[1]="Troca"
+echo ${mundo[0]}
+
+
+declare -a mundo
+
+echo ${#mundo[@]} # conta quantos elemento tenho no array
+echo ${mundo[*]} #printa todos os elementos
+
+echo ${mundo[@]:2} somente alguns
+"gnu" "linux" "debian"
+echo ${mundo[@]:2:3} somente alguns
+"gnu" "linux"
+
+unset mundo[2] deleta o elemento 3 do array
+
+
+__________________________________________________________
+
+AULA03
+
+FUNÇÕES EM SHELL
+
+funcao(){#intruções}
+
+function funcao(){#intruções}
+
+MinhaFuncao(){
+
+echo "Essa é minha função"
+
+}
+
+MinhaFuncao   #saida: Essa é minha função
+
+PASSANDO PARAMETROS PARA A FUNÇÃO
+
+MinhaFuncao(){
+echo "Eu escrevo em $2 $1"
+}
+
+MinhaFuncao $1 $2
+
+MinhaFuncao Shell Script
+
+
+MinhaFuncao(){
+echo "Todos os parametros que vc passou: $@"
+}
+
+MinhaFuncao Shell Script Bash
+
+return
+
+MinhaFuncao(){
+local OLA="Ola, mundo!"
+echo "Isso sera exibido"
+echo $OLA
+return
+
+echo "Isso não sera exibido, porque esta depois do return"
+
+}
+
+MinhaFuncao $@
+echo $OLA
+
+
+constantes
+
+
+declare -r MINHACONSTANTE='sempre igual'
+MINHACONSTANTE="agora é isso"
+echo MINHACONSTANTE
+
+
+unset MinhaFuncao # apaga a função
+unset CONSTANTE # apaga a constante
+
+source arquivo_externo #chama arquivos externos para o shellscript
+
+
+builtin - para usuar nome de funçoes com palavras reservadas do shell
+
+cd(){
+echo "este comando é reservado do linux"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+__________________________________________________________
+
+AULA04
+
+
+CONDIÇÕES EM SHELL SCRIPT
+
+teste 1 = 1; echo $?
+0 - verdadeiro
+
+teste 1 = 2; echo $?
+1 - falso
+
+#!/bin/bash
+# source inicio.sh
+
+MinhaFuncao(){
+variavel=$1;
+ if  teste "$variavel" -gt 10
+     then
+       echo "é maior que 10"
+
+ elif teste "$variavel" -eq 10
+      then
+        echo "é igual 10"
+ else
+        echo "é menor que 10"
+ fi
+}
+
+MinhaFuncao $1
+
+
+MinhaFuncao(){
+variavel=$1;
+ if  teste [[ $variavel" -gt 10 ]];
+     then
+       echo "é maior que 10"
+
+ elif teste [[ $variavel" -eq 10 ]];
+      then
+        echo "é igual 10"
+ else
+        echo "é menor que 10"
+ fi
+}
+
+MinhaFuncao $1
+
+
+
+CASE
+
+
+MinhaFuncao(){
+case $1 in
+10) echo "é 10" ;;
+9) echo "é 9" ;;
+7|8) echo "é 8" ;;
+*) echo "é menor que 6 ou maior que 10" ;;
+esac
+}
+
+MinhaFuncao $1
+
+
+
+__________________________________________________________
+
+AULA05
+
+LOOPS EM SHELL SCRIPT
+
+for ((i=0;i<10;i++));
+  do
+     echo $1
+  done
+
+for i in {2..8};
+  do
+     echo $1
+  done
+
+for i in $(seq 2 8);
+  do
+     echo $1
+  done
+
+
+cd meudiretorio/
+
+for runlevel in 0 1 2 3 4 
+  do
+     mkdir rc${runlevel}.d
+     echo $runlevel
+  done
+
+echo
+
+WHILE
+
+
+_INPUT_STRING="Olá"
+
+while [[ "$_INPUT_STRING" != "tchau" ]]
+
+  do 
+    echo "Voce deseja ficar aqui?"
+     read $_INPUT_STRING
+     
+      if [[ $_INPUT_STRING = 'tchau' ]]; then
+          echo "Voce disse Tchau"
+      else
+          echo "Voce ainda deseja ficar aqui"
+      fi
+  done
+
+
+
+CONTINUE, BREAK, EXIT
+
+
+for i in $(seq 1 10);
+  do
+     if [[ "$i" < "8" ]]; then
+        continue
+     fi
+     
+     if [[ "$i" > "9" ]]; then
+        break
+     fi
+     
+     echo $i;
+
+  done
+  
+  exit 0;
+
+
+while : 
+
+  do 
+    echo "Voce deseja ficar aqui?"
+     read $_INPUT_STRING
+     
+      if [[ $_INPUT_STRING != 'tchau' ]]; then
+          continue
+      else
+          break
+      fi
+  done
+
+__________________________________________________________
+
+AULA06
+
+stdin, stdout, stderr
+
+touch lista.txt 
+echo "esse conteudo" > lista.txt
+echo "outro conteudo >> lista.txt -- salva na linha de baixo
+
+echo -e "Jaca\nAbacaxi\nPera\nAbacaxi\nMaca" > lista.txt
+cat lista.txt
+
+cat lista.txt | sort |
+cat lista.txt | uniq |
+cat lista.txt | sort | uniq
+
+
+
+
+__________________________________________________________
+
+AULA07
+
+
+builtins
+
+coreutils
+
+eval - pega conteudo de uma variavel e coloca em outra
+
+A='ls'
+B=A
+echo $B
+
+eval echo '$'$B
+
+
+exec- 
+
+find meudiretorio/ -name z.*
+
+find meudiretorio/ -name z.* exec rm {} \;
+
+readonly - somente permissao de leitura em variaveis
+
+T=123
+echo $T
+T=324
+echo $T
+readonly T=324
+T=123 - erro
+
+
+comando SHIFT altera posições de parametros em lote de um arquivo.
+
+TRAP o bash fornece um builtin chamado trap para tratamento de sinais
+
+MAN - manual de todos os comando linux
+
+XMAN - manual dos comando em interface grafica
+
+
+
+links de pesquisa de comandos:
+
+COMANDOS LINUX:
+http://www.comandoslinux.com/
+
+EXPLICAÇÃO MASTIGADA DOS COMANDOS SHELL SCRIPT/Bash/Linux
+http://explainshell.com/
+
+
+
+
+
+
+
+
+__________________________________________________________
+
+AULA08
+
+
+matematica
+
+echo $((2+2))
+
+a=2+2; echo $a
+declare -i a
+echo $a
+
+
+echo "5/2" | bc
+2
+echo "scale=2;5/2" | bc
+2.50
+
+expr 2 + 2 -- necessario espaço entre os numeros
+
+herestrings 
+  bc <<< 2+2
+
+dc 
+
+echo '2 8 * p' | dc
+
+echo '20 10 / p' > calc.txt
+
+
+echo "obase=2;1" | bc
+echo "obase=2;0" | bc
+echo "obase=2;54" | bc
+
+
+expr length "Root"
+
+
+
+
+
+__________________________________________________________
+
+AULA09
+
+
+
+
+
+
+
+__________________________________________________________
+
+AULA10
